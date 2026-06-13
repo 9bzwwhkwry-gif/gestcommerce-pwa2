@@ -1,4 +1,4 @@
-import { openDB, DBSchema, IDBPDatabase, IDBPUpgradeDB } from "idb";
+import { openDB, DBSchema, IDBPDatabase } from "idb";
 import type {
   Sale,
   Product,
@@ -59,7 +59,7 @@ export async function getDB(): Promise<IDBPDatabase<EcommerceDB>> {
   if (dbInstance) return dbInstance;
 
   dbInstance = await openDB<EcommerceDB>(DB_NAME, DB_VERSION, {
-    upgrade(db: IDBPUpgradeDB<EcommerceDB>) {
+    upgrade(db: any) {
       // Sales store
       if (!db.objectStoreNames.contains("sales")) {
         const salesStore = db.createObjectStore("sales", { keyPath: "id" });
